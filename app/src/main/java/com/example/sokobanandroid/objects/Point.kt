@@ -1,5 +1,5 @@
 package com.example.sokobanandroid.objects
 
-class RedArea {
+class Point {
 
 }

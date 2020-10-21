@@ -1,4 +1,6 @@
-package labs.o.sokobanmvcpattern
+package com.example.sokobanandroid
+
+import com.example.sokobanandroid.model.Model
 
 class Controller(viewer: MainActivity) {
     private val model = Model(viewer)

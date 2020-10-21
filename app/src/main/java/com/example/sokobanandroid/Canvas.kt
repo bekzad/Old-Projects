@@ -1,9 +1,10 @@
-package labs.o.sokobanmvcpattern
+package com.example.sokobanandroid
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sokobanandroid.model.Model
 
 class Canvas(private val model: Model, context: AppCompatActivity) : View(context) {
     private val paint = Paint()
