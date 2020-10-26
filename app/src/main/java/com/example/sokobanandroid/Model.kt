@@ -1,54 +1,85 @@
 package com.example.sokobanandroid
 
+import com.example.sokobanandroid.SokobanProperties.Companion.EMPTY_SPACE
 import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_BOTTOM
 import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_LEFT
 import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_RIGHT
 import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_TOP
+import com.example.sokobanandroid.SokobanProperties.Companion.PLAYER
 
 class Model {
 
     private val viewer: Viewer
-    private var x: Int
-    private var y: Int
-    private val desktop: Array<IntArray>
+    private var indexX: Int
+    private var indexY: Int
+    private var desktop: Array<IntArray>?
 
     constructor(viewer: Viewer) {
         this.viewer = viewer
-        this.x = 150
-        this.y = 150
-        this.desktop = arrayOf(
+        this.indexX = 0
+        this.indexY = 0
+        this.desktop = null
+        initGameMap()
+    }
+
+    private fun initGameMap() {
+       this.desktop =  arrayOf(
             intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-            intArrayOf(2, 1, 2, 2, 2, 2, 2, 2, 2, 2),
-            intArrayOf(2, 0, 2, 0, 0, 2, 2, 2, 2, 2),
-            intArrayOf(2, 0, 2, 0, 0, 2, 0, 0, 0, 2),
-            intArrayOf(2, 0, 2, 0, 3, 0, 0, 3, 0, 2),
-            intArrayOf(2, 0, 2, 0, 0, 0, 0, 0, 0, 2),
-            intArrayOf(2, 0, 2, 2, 2, 2, 0, 3, 0, 2),
-            intArrayOf(2, 0, 0, 0, 0, 0, 0, 0, 0, 2),
-            intArrayOf(2, 2, 0, 0, 0, 0, 0, 3, 0, 2),
-            intArrayOf(2, 2, 0, 0, 0, 0, 0, 0, 0, 2),
-            intArrayOf(2, 2, 0, 0, 0, 0, 0, 0, 0, 2),
-            intArrayOf(2, 2, 2, 0, 0, 2, 2, 2, 2, 2),
-            intArrayOf(2, 2, 0, 0, 0, 0, 0, 4, 4, 2),
-            intArrayOf(2, 2, 0, 0, 0, 0, 0, 4, 4, 2),
-            intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2))
+            intArrayOf(2, 4, 0, 0, 0, 2, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
+            intArrayOf(2, 4, 0, 0, 0, 0, 2, 0, 0, 2),
+            intArrayOf(2, 4, 0, 0, 0, 0, 2, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
+            intArrayOf(2, 4, 0, 0, 0, 2, 0, 0, 1, 2),
+            intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
+        )
+        setPlayerPosition()
+    }
+
+    private fun setPlayerPosition() {
+        for (row in desktop?.indices!!) {
+            for (column in desktop!![row].indices) {
+                if (desktop!![row][column] == PLAYER) {
+                    indexX = row
+                    indexY = column
+                }
+            }
+        }
     }
 
     fun move(direction: String) {
         when (direction) {
-            MOVE_LEFT -> x -= 150
-            MOVE_TOP -> y -= 150
-            MOVE_RIGHT -> x += 150
-            MOVE_BOTTOM -> y += 150
+            MOVE_LEFT -> moveLeft()
+            MOVE_TOP -> moveTop()
+            MOVE_RIGHT -> moveRight()
+            MOVE_BOTTOM -> moveBottom()
 
             else -> return
         }
         viewer.update()
     }
 
-    fun getX(): Int = x
+    private fun moveLeft() {
+        desktop!![indexX][indexY] = EMPTY_SPACE
+        desktop!![indexX][--indexY] = PLAYER
+    }
 
-    fun getY(): Int = y
+    private fun moveRight() {
+        desktop!![indexX][indexY] = EMPTY_SPACE
+        desktop!![indexX][++indexY] = PLAYER
+    }
+
+    private fun moveTop() {
+        desktop!![indexX][indexY] = EMPTY_SPACE
+        desktop!![--indexX][indexY] = PLAYER
+    }
+
+    private fun moveBottom() {
+        desktop!![indexX][indexY] = EMPTY_SPACE
+        desktop!![++indexX][indexY] = PLAYER
+    }
 
     fun getArrayGameMap() = desktop
 

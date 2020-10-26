@@ -31,9 +31,6 @@ class SokobanCanvas : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawMap(canvas)
-        val w = this.measuredWidth
-        val h = this.measuredHeight
-        println("measureW: $w, measureH: $h")
     }
 
     fun update() {
@@ -44,7 +41,7 @@ class SokobanCanvas : View {
         val screenWidth: Int = width
 
         val desktop = model.getArrayGameMap()
-        val mapObjectSize = screenWidth / desktop[0].size
+        val mapObjectSize = screenWidth / desktop!![0].size
 
         createBitmapMapObjects(mapObjectSize)
         println(desktop.size)
