@@ -20,9 +20,6 @@ class Viewer : AppCompatActivity {
         controller = Controller(this)
         sokobanCanvas = SokobanCanvas(controller?.getModel()!!, this)
         setContentView(sokobanCanvas)
-        val w = sokobanCanvas?.measuredWidth
-        val h = sokobanCanvas?.measuredHeight
-        println("measureW: $w, measureH: $h")
         sokobanCanvas?.setOnTouchListener(controller)
     }
 

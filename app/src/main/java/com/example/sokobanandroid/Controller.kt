@@ -20,6 +20,7 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
         this.gestureDetector = GestureDetector(viewer, this)
     }
 
+
     fun getModel(): Model {
         return model
     }
@@ -28,16 +29,29 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
         return gestureDetector.onTouchEvent(event)
     }
 
+    override fun onDown(e: MotionEvent?): Boolean {
+        return true
+    }
+
     override fun onFling(
-        e1: MotionEvent,
-        e2: MotionEvent,
+        motionStart: MotionEvent,
+        motionEnd: MotionEvent,
         velocityX: Float,
         velocityY: Float
     ): Boolean {
+        return userSwipe(motionStart, motionEnd, velocityX, velocityY)
+    }
+
+    private fun userSwipe(
+        motionStart: MotionEvent,
+        motionEnd: MotionEvent, velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+
         var result = false
 
-        val diffY = e2.y - e1.y
-        val diffX = e2.x - e1.x
+        val diffY = motionEnd.y - motionStart.y
+        val diffX = motionEnd.x - motionStart.x
 
         if (abs(diffX) > abs(diffY)) {
             if (abs(diffX) > SokobanProperties.SWIPE_THRESHOLD && abs(velocityX) > SokobanProperties.SWIPE_VELOCITY_THRESHOLD) {
@@ -76,9 +90,4 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
     private fun onSwipeTop() {
         model.move(MOVE_TOP)
     }
-
-    override fun onDown(e: MotionEvent?): Boolean {
-        return true
-    }
-
 }

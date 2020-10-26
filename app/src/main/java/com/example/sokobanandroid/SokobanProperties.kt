@@ -11,11 +11,11 @@ class SokobanProperties {
         const val MOVE_TOP: String = "Top"
         const val MOVE_BOTTOM: String = "Bottom"
 
-        const val EMPTY_SPACE: Int = 0
+        const val EMPTY_SPACE_IN_GAME_MAP: Int = 0
         const val PLAYER: Int = 1
-        const val WALL: Int = 2
-        const val BOX: Int = 3
-        const val TARGET: Int = 4
+        const val WALL_IN_GAME_MAP: Int = 2
+        const val BOX_IN_GAME_MAP: Int = 3
+        const val TARGET_IN_GAME_MAP: Int = 4
     }
 
 }

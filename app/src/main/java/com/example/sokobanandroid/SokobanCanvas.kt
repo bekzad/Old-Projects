@@ -6,10 +6,10 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
-import com.example.sokobanandroid.SokobanProperties.Companion.BOX
+import com.example.sokobanandroid.SokobanProperties.Companion.BOX_IN_GAME_MAP
 import com.example.sokobanandroid.SokobanProperties.Companion.PLAYER
-import com.example.sokobanandroid.SokobanProperties.Companion.TARGET
-import com.example.sokobanandroid.SokobanProperties.Companion.WALL
+import com.example.sokobanandroid.SokobanProperties.Companion.TARGET_IN_GAME_MAP
+import com.example.sokobanandroid.SokobanProperties.Companion.WALL_IN_GAME_MAP
 
 
 class SokobanCanvas : View {
@@ -40,13 +40,14 @@ class SokobanCanvas : View {
     private fun drawMap(canvas: Canvas) {
         val screenWidth: Int = width
 
-        val desktop = model.getArrayGameMap()
-        val mapObjectSize = screenWidth / desktop!![0].size
+        val arrayMap = model.getArrayGameMap()
+        val mapObjectSize = screenWidth / arrayMap!![0].size
 
         createBitmapMapObjects(mapObjectSize)
-        println(desktop.size)
-        drawMapObjects(desktop, canvas, mapObjectSize,
-            calculateDifferenceInVerticalOffsetsOfTheMap(mapObjectSize, desktop.size)
+
+        drawMapObjects(
+            arrayMap, canvas, mapObjectSize,
+            calculateDifferenceInVerticalOffsetsOfTheMap(mapObjectSize, arrayMap.size)
         )
     }
 
@@ -92,13 +93,13 @@ class SokobanCanvas : View {
         for (row in arrayMap) {
             for (column in row) {
                 when (column) {
-                    WALL -> {
+                    WALL_IN_GAME_MAP -> {
                         canvas.drawBitmap(wall!!, coordinateX, coordinateY, paint)
                     }
-                    TARGET -> {
+                    TARGET_IN_GAME_MAP -> {
                         canvas.drawBitmap(target!!, coordinateX, coordinateY, paint)
                     }
-                    BOX -> {
+                    BOX_IN_GAME_MAP -> {
                         canvas.drawBitmap(box!!, coordinateX, coordinateY, paint)
                     }
                     PLAYER -> {
@@ -112,7 +113,10 @@ class SokobanCanvas : View {
         }
     }
 
-    private fun calculateDifferenceInVerticalOffsetsOfTheMap(objectSize: Int, arrayMapVerticalCount: Int): Int {
+    private fun calculateDifferenceInVerticalOffsetsOfTheMap(
+        objectSize: Int,
+        arrayMapVerticalCount: Int
+    ): Int {
         val mapHeight = objectSize * arrayMapVerticalCount
         val screenHeight = height
         val screenDifferences = screenHeight - mapHeight
