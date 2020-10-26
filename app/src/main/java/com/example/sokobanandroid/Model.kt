@@ -11,8 +11,8 @@ import com.example.sokobanandroid.SokobanProperties.Companion.WALL
 class Model {
 
     private val viewer: Viewer
-    private var indexX: Int
-    private var indexY: Int
+    private var xIndex: Int
+    private var yIndex: Int
     private var desktop: Array<IntArray>?
     private var nextBlock: Int
     private var movingBox: Int
@@ -24,8 +24,8 @@ class Model {
 
     constructor(viewer: Viewer) {
         this.viewer = viewer
-        indexX = 0
-        indexY = 0
+        xIndex = 0
+        yIndex = 0
         desktop = null
         nextBlock = 0
         movingBox = 0
@@ -55,8 +55,8 @@ class Model {
         for (row in desktop?.indices!!) {
             for (column in desktop!![row].indices) {
                 if (desktop!![row][column] == PLAYER) {
-                    indexX = row
-                    indexY = column
+                    xIndex = column
+                    yIndex = row
                 }
             }
         }
@@ -71,18 +71,19 @@ class Model {
 
             else -> return
         }
+        oldTarget = newTarget
         viewer.update()
     }
 
     private fun moveLeft() {
         // The block that the Player is going to step on
-        nextBlock = desktop!![indexY][indexX - 1]
+        nextBlock = desktop!![yIndex][xIndex - 1]
 
         // Are you moving a box? If yes assign 1 if no assign 0
         movingBox = if (nextBlock == 3) 1 else 0
 
         // Don't move if you're going outside of an array or see a wall
-        if (indexX - movingBox == 0 || desktop!![indexY][indexX - 1 - movingBox] == WALL
+        if (xIndex - movingBox == 0 || desktop!![yIndex][xIndex - 1 - movingBox] == WALL
         ) {
             return
         }
@@ -92,19 +93,18 @@ class Model {
 
         // If you see a box in front move it first
         if (movingBox == 1) {
-            desktop!![indexY][indexX - 2] = 3
+            desktop!![yIndex][xIndex - 2] = 3
         }
 
         // Move to left
         if (oldTarget) {
-            desktop!![indexY][indexX] = 4
+            desktop!![yIndex][xIndex] = 4
         } else {
-            desktop!![indexY][indexX] = 0
+            desktop!![yIndex][xIndex] = 0
         }
-
         oldTarget = false
-        indexX -= 1
-        desktop!![indexY][indexX] = 1
+        xIndex -= 1
+        desktop!![yIndex][xIndex] = 1
 
         /*desktop!![indexX][indexY] = EMPTY_SPACE
         desktop!![indexX][--indexY] = PLAYER*/
@@ -112,14 +112,14 @@ class Model {
 
     private fun moveRight() {
         // The block that the Player is going to step on
-        nextBlock = desktop!![indexY][indexX + 1]
+        nextBlock = desktop!![yIndex][xIndex + 1]
 
         // Are you moving a box? If yes assign 1 if no assign 0
         movingBox = if (nextBlock == 3) 1 else 0
 
         // Don't move if you're going outside of an array or see a wall
-        if (indexX + movingBox == 10 - 1
-            || desktop!![indexY][indexX + 1 + movingBox] == WALL
+        if (xIndex + movingBox == 10 - 1
+            || desktop!![yIndex][xIndex + 1 + movingBox] == WALL
         ) {
             return
         }
@@ -129,18 +129,18 @@ class Model {
 
         // If you see a box in front move it too
         if (movingBox == 1) {
-            desktop!![indexY][indexX + 2] = 3
+            desktop!![yIndex][xIndex + 2] = 3
         }
 
         // Move to Right
         if (oldTarget) {
-            desktop!![indexY][indexX] = 4
+            desktop!![yIndex][xIndex] = 4
         } else {
-            desktop!![indexY][indexX] = 0
+            desktop!![yIndex][xIndex] = 0
         }
         oldTarget = false
-        indexX += 1
-        desktop!![indexY][indexX] = 1
+        xIndex += 1
+        desktop!![yIndex][xIndex] = 1
 
         /*desktop!![indexX][indexY] = EMPTY_SPACE
         desktop!![indexX][++indexY] = PLAYER*/
@@ -148,13 +148,13 @@ class Model {
 
     private fun moveTop() {
         // The block that the Player is going to step on
-        nextBlock = desktop!![indexY - 1][indexX]
+        nextBlock = desktop!![yIndex - 1][xIndex]
 
         // Are you moving a box? If yes assign 1 if no assign 0
         movingBox = if (nextBlock == 3) 1 else 0
 
         // Don't move if you're going outside of an array or see a wall
-        if (indexY - movingBox == 0 || desktop!![indexY - 1 - movingBox][indexX] == WALL
+        if (yIndex - movingBox == 0 || desktop!![yIndex - 1 - movingBox][xIndex] == WALL
         ) {
             return
         }
@@ -164,18 +164,18 @@ class Model {
 
         // If you see a box in front move it first
         if (movingBox == 1) {
-            desktop!![indexY - 2][indexX] = 3
+            desktop!![yIndex - 2][xIndex] = 3
         }
 
         // Move to Up
         if (oldTarget) {
-            desktop!![indexY][indexX] = 4
+            desktop!![yIndex][xIndex] = 4
         } else {
-            desktop!![indexY][indexX] = 0
+            desktop!![yIndex][xIndex] = 0
         }
         oldTarget = false
-        indexY -= 1
-        desktop!![indexY][indexX] = 1
+        yIndex -= 1
+        desktop!![yIndex][xIndex] = 1
 
         /*desktop!![indexX][indexY] = EMPTY_SPACE
         desktop!![--indexX][indexY] = PLAYER*/
@@ -183,14 +183,14 @@ class Model {
 
     private fun moveBottom() {
         // The block that the Player is going to step on
-        nextBlock = desktop!![indexY + 1][indexX]
+        nextBlock = desktop!![yIndex + 1][xIndex]
 
         // Are you moving a box? If yes assign 1 if no assign 0
         movingBox = if (nextBlock == 3) 1 else 0
 
         // Don't move if you're going outside of an array or see a wall
-        if (indexY + movingBox == 10 - 1
-            || desktop!![indexY + 1 + movingBox][indexX] == WALL
+        if (yIndex + movingBox == 10
+            || desktop!![yIndex + 1 + movingBox][xIndex] == WALL
         ) {
             return
         }
@@ -200,19 +200,18 @@ class Model {
 
         // If you see a box in front move it too
         if (movingBox == 1) {
-            desktop!![indexY + 2][indexY] = 3
+            desktop!![yIndex + 2][xIndex] = 3
         }
 
         // Move to Down
         if (oldTarget) {
-            desktop!![indexY][indexY] = 4
+            desktop!![yIndex][xIndex] = 4
         } else {
-            desktop!![indexY][indexY] = 0
+            desktop!![yIndex][xIndex] = 0
         }
         oldTarget = false
-        indexY += 1
-        desktop!![indexY][indexY] = 1
-
+        yIndex += 1
+        desktop!![yIndex][xIndex] = 1
         /*desktop!![indexX][indexY] = EMPTY_SPACE
         desktop!![++indexX][indexY] = PLAYER*/
     }
