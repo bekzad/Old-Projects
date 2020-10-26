@@ -2,45 +2,35 @@ package com.example.sokobanandroid
 
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.view.View
 import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_BOTTOM
 import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_LEFT
 import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_RIGHT
 import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_TOP
+import com.example.sokobanandroid.SokobanProperties.Companion.SWIPE_THRESHOLD
+import com.example.sokobanandroid.SokobanProperties.Companion.SWIPE_VELOCITY_THRESHOLD
 import kotlin.math.abs
 
+class SwipeListener : GestureDetector.SimpleOnGestureListener {
 
-class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener {
+    private val controller: Controller
 
-    private val model: Model
-    private val gestureDetector: GestureDetector
-
-    constructor(viewer: Viewer) {
-        this.model = Model(viewer)
-        this.gestureDetector = GestureDetector(viewer, this)
+    constructor(controller: Controller) {
+        this.controller = controller
     }
 
-    fun getModel(): Model {
-        return model
+    override fun onDown(event: MotionEvent): Boolean {
+        return true
     }
 
-    override fun onTouch(view: View, event: MotionEvent): Boolean {
-        return gestureDetector.onTouchEvent(event)
-    }
+    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
 
-    override fun onFling(
-        e1: MotionEvent,
-        e2: MotionEvent,
-        velocityX: Float,
-        velocityY: Float
-    ): Boolean {
         var result = false
 
         val diffY = e2.y - e1.y
         val diffX = e2.x - e1.x
 
         if (abs(diffX) > abs(diffY)) {
-            if (abs(diffX) > SokobanProperties.SWIPE_THRESHOLD && abs(velocityX) > SokobanProperties.SWIPE_VELOCITY_THRESHOLD) {
+            if (abs(diffX) > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                 if (diffX > 0) {
                     onSwipeRight()
                 } else {
@@ -49,7 +39,7 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
                 result = true
             }
 
-        } else if (abs(diffY) > SokobanProperties.SWIPE_THRESHOLD && abs(velocityY) > SokobanProperties.SWIPE_VELOCITY_THRESHOLD) {
+        } else if (abs(diffY) > SWIPE_THRESHOLD && abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
             if (diffY > 0) {
                 onSwipeBottom()
             } else {
@@ -62,23 +52,18 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
     }
 
     private fun onSwipeRight() {
-        model.move(MOVE_RIGHT)
+        //controller.move(MOVE_RIGHT)
     }
 
     private fun onSwipeLeft() {
-        model.move(MOVE_LEFT)
+        //controller.move(MOVE_LEFT)
     }
 
     private fun onSwipeBottom() {
-        model.move(MOVE_BOTTOM)
+        //controller.move(MOVE_BOTTOM)
     }
 
     private fun onSwipeTop() {
-        model.move(MOVE_TOP)
+        //controller.move(MOVE_TOP)
     }
-
-    override fun onDown(e: MotionEvent?): Boolean {
-        return true
-    }
-
 }
