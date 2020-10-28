@@ -46,7 +46,7 @@ class SokobanCanvas : View {
     }
 
     private fun drawMap(canvas: Canvas) {
-        if (model.setView()) {
+        if (model.isSetView()) {
             val arrayMap = model.getArrayGameMap()
             println("arrayMap: $arrayMap")
             val mapObjectSize = calculateMapObjectSize(arrayMap!!)

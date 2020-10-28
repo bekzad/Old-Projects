@@ -22,15 +22,14 @@ class ReadLevelsFromFile {
         return when (levelName) {
             MAP_LEVEL_FOUR -> readFile(MAP_LEVEL_FOUR, context)
             MAP_LEVEL_FIVE -> readFile(MAP_LEVEL_FIVE, context)
-            else       -> readFile(MAP_LEVEL_SIX, context)
+            else           -> readFile(MAP_LEVEL_SIX, context)
         }
     }
 
     private fun readFile(levelName: String, context: Context): Array<IntArray> {
         getArrayMapSize(levelName, context)
 
-        val mapArray =
-            Array(mapSize) { IntArray(mapRow) }
+        val mapArray = Array(mapSize) { IntArray(mapRow) }
 
         val fileLevel = context.assets.open(levelName)
 

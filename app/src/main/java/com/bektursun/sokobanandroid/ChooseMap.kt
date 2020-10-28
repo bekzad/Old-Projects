@@ -1,60 +1,57 @@
 package com.bektursun.sokobanandroid
 
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_EIGHT
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_EIGHT
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_FIVE
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_FOUR
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_NINE
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_ONE
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_SEVEN
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_NINE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_ONE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_SEVEN
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_SIX
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_THREE
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_TWO
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_THREE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_TWO
 
 class ChooseMap {
 
     private val viewer: Viewer
+    private var model: Model
 
-    constructor(viewer: Viewer) {
+    constructor(viewer: Viewer, model: Model) {
         this.viewer = viewer
+        this.model = model
     }
 
-    fun chooseMap(level: String): Array<IntArray> {
-        println("CHOOSEMAP: $level")
+    fun chooseLocalMaps(level: String): Array<IntArray> {
+        return when (level) {
+            MAP_LEVEL_ONE -> getFirstLevel()
+            MAP_LEVEL_TWO -> getSecondLevel()
+            MAP_LEVEL_THREE -> getThirdLevel()
+
+            MAP_LEVEL_FOUR -> ReadLevelsFromFile().readLevelFromFile(MAP_LEVEL_FOUR, viewer)
+            MAP_LEVEL_FIVE -> ReadLevelsFromFile().readLevelFromFile(MAP_LEVEL_FIVE, viewer)
+            else -> ReadLevelsFromFile().readLevelFromFile(MAP_LEVEL_SIX, viewer)
+        }
+    }
+
+    fun chooseMap(level: String) {
+        val serverAddress = SokobanProperties.readProperty("host", viewer)
+        val serverPort = SokobanProperties.readProperty("port", viewer)
         when (level) {
-
-            LEVEL_ONE -> return getFirstLevel()
-            LEVEL_TWO -> return getSecondLevel()
-            LEVEL_THREE -> return getThirdLevel()
-
-            MAP_LEVEL_FOUR -> return ReadLevelsFromFile().readLevelFromFile(MAP_LEVEL_FOUR, viewer)
-            MAP_LEVEL_FIVE -> return ReadLevelsFromFile().readLevelFromFile(MAP_LEVEL_FIVE, viewer)
-            MAP_LEVEL_SIX  -> return ReadLevelsFromFile().readLevelFromFile(MAP_LEVEL_SIX, viewer)
-
-            LEVEL_SEVEN -> {
-                val connectToServer = Connect()
-                return connectToServer.send(LEVEL_SEVEN)
-            }
-            LEVEL_EIGHT -> {
-                val connectToServer = Connect()
-                return connectToServer.send(LEVEL_EIGHT)
-            }
-            else -> {
-                val connectToServer = Connect()
-                return connectToServer.send(LEVEL_NINE)
-            }
+            MAP_LEVEL_SEVEN -> ConnectToServer(model).getLevelFromServer(MAP_LEVEL_SEVEN, serverAddress, serverPort.toInt())
+            MAP_LEVEL_EIGHT -> ConnectToServer(model).getLevelFromServer(MAP_LEVEL_EIGHT, serverAddress, serverPort.toInt())
+            else            -> ConnectToServer(model).getLevelFromServer(MAP_LEVEL_NINE, serverAddress, serverPort.toInt())
         }
     }
 
     private fun getFirstLevel(): Array<IntArray> {
         return arrayOf(
             intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-            intArrayOf(2, 4, 0, 0, 0, 2, 0, 0, 0, 2),
-            intArrayOf(2, 0, 2, 0, 0, 3, 0, 0, 0, 2),
-            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
+            intArrayOf(2, 3, 0, 0, 0, 2, 0, 0, 0, 2),
+            intArrayOf(2, 0, 2, 0, 0, 0, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 0, 0, 0, 0, 2),
             intArrayOf(2, 4, 0, 0, 0, 0, 2, 0, 0, 2),
             intArrayOf(2, 4, 0, 0, 0, 0, 2, 0, 0, 2),
-            intArrayOf(2, 0, 2, 0, 0, 3, 0, 0, 2, 2),
-            intArrayOf(2, 0, 2, 0, 0, 3, 0, 0, 0, 2),
+            intArrayOf(2, 0, 2, 0, 0, 4, 0, 0, 2, 2),
+            intArrayOf(2, 0, 2, 0, 0, 0, 0, 0, 0, 2),
             intArrayOf(2, 4, 0, 0, 0, 2, 0, 0, 1, 2),
             intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
         )
@@ -63,14 +60,14 @@ class ChooseMap {
     private fun getSecondLevel(): Array<IntArray> {
         return arrayOf(
             intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-            intArrayOf(2, 4, 0, 0, 0, 2, 0, 0, 2, 2),
-            intArrayOf(2, 0, 0, 0, 0, 3, 0, 2, 2, 2),
-            intArrayOf(2, 0, 0, 0, 0, 3, 0, 2, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 2, 0, 0, 2, 2),
+            intArrayOf(2, 0, 0, 0, 0, 0, 0, 2, 2, 2),
+            intArrayOf(2, 3, 3, 0, 0, 0, 0, 2, 0, 2),
             intArrayOf(2, 4, 0, 0, 0, 0, 2, 2, 0, 2),
             intArrayOf(2, 4, 0, 0, 0, 0, 2, 0, 0, 2),
-            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
-            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
-            intArrayOf(2, 4, 0, 0, 0, 2, 0, 0, 1, 2),
+            intArrayOf(2, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 2, 0, 0, 1, 2),
             intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
         )
     }
@@ -78,13 +75,13 @@ class ChooseMap {
     private fun getThirdLevel(): Array<IntArray> {
         return arrayOf(
             intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-            intArrayOf(2, 4, 0, 0, 0, 2, 0, 0, 0, 2),
-            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
-            intArrayOf(2, 0, 0, 0, 0, 3, 0, 0, 0, 2),
+            intArrayOf(2, 3, 3, 3, 0, 2, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 0, 0, 0, 0, 0, 0, 2),
             intArrayOf(2, 4, 0, 0, 0, 0, 2, 0, 0, 2),
             intArrayOf(2, 4, 0, 0, 0, 0, 2, 0, 0, 2),
-            intArrayOf(2, 0, 0, 2, 0, 3, 0, 0, 0, 2),
-            intArrayOf(2, 0, 0, 2, 0, 3, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 2, 0, 0, 0, 0, 0, 2),
+            intArrayOf(2, 0, 0, 2, 0, 0, 0, 0, 0, 2),
             intArrayOf(2, 4, 0, 2, 0, 2, 0, 0, 1, 2),
             intArrayOf(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
         )

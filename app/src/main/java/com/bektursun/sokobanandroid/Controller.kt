@@ -4,19 +4,21 @@ import android.content.DialogInterface
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_EIGHT
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_EIGHT
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_FIVE
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_FOUR
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_NINE
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_ONE
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_SEVEN
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_NINE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_ONE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_SEVEN
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_SIX
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_THREE
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_TWO
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_THREE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_TWO
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MOVE_BOTTOM
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MOVE_LEFT
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MOVE_RIGHT
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MOVE_TOP
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.SWIPE_THRESHOLD
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.SWIPE_VELOCITY_THRESHOLD
 import kotlin.math.abs
 
 
@@ -65,24 +67,19 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
         val diffX = motionEnd.x - motionStart.x
 
         if (abs(diffX) > abs(diffY)) {
-            if (abs(diffX) > SokobanProperties.SWIPE_THRESHOLD && abs(velocityX) > SokobanProperties.SWIPE_VELOCITY_THRESHOLD) {
-                if (diffX > 0) {
-                    onSwipeRight()
-                } else {
-                    onSwipeLeft()
-                }
+            if (abs(diffX) > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffX > 0) onSwipeRight()
+                else onSwipeLeft()
+
                 result = true
             }
 
-        } else if (abs(diffY) > SokobanProperties.SWIPE_THRESHOLD && abs(velocityY) > SokobanProperties.SWIPE_VELOCITY_THRESHOLD) {
-            if (diffY > 0) {
-                onSwipeBottom()
-            } else {
-                onSwipeTop()
-            }
+        } else if (abs(diffY) > SWIPE_THRESHOLD && abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+            if (diffY > 0) onSwipeBottom()
+            else onSwipeTop()
+
             result = true
         }
-
         return result
     }
 
@@ -107,19 +104,16 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
     }
 
     override fun onClick(dialogInterface: DialogInterface, level: Int) {
-        println("level: $level")
         when (level) {
-            0 -> {
-                model.chooseLevel(LEVEL_ONE)
-            }
-            1 -> model.chooseLevel(LEVEL_TWO)
-            2 -> model.chooseLevel(LEVEL_THREE)
-            3 -> model.chooseLevel(MAP_LEVEL_FOUR)
-            4 -> model.chooseLevel(MAP_LEVEL_FIVE)
-            5 -> model.chooseLevel(MAP_LEVEL_SIX)
-            6 -> model.chooseLevel(LEVEL_SEVEN)
-            7 -> model.chooseLevel(LEVEL_EIGHT)
-            else -> model.chooseLevel(LEVEL_NINE)
+            0 -> model.chooseLocalLevel(MAP_LEVEL_ONE)
+            1 -> model.chooseLocalLevel(MAP_LEVEL_TWO)
+            2 -> model.chooseLocalLevel(MAP_LEVEL_THREE)
+            3 -> model.chooseLocalLevel(MAP_LEVEL_FOUR)
+            4 -> model.chooseLocalLevel(MAP_LEVEL_FIVE)
+            5 -> model.chooseLocalLevel(MAP_LEVEL_SIX)
+            6 -> model.chooseLevel(MAP_LEVEL_SEVEN)
+            7 -> model.chooseLevel(MAP_LEVEL_EIGHT)
+            else -> model.chooseLevel(MAP_LEVEL_NINE)
         }
         dialogInterface.dismiss()
     }
@@ -127,5 +121,6 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
     private fun restartGame() {
         println("Game is Restarted! Yeah! Bitch!")
     }
+
 
 }
