@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
 import com.bektursun.sokobanandroid.Properties.Companion.BOX
+import com.bektursun.sokobanandroid.Properties.Companion.ONTARGET
 import com.bektursun.sokobanandroid.Properties.Companion.PLAYER
 import com.bektursun.sokobanandroid.Properties.Companion.TARGET
 import com.bektursun.sokobanandroid.Properties.Companion.WALL
@@ -20,6 +21,7 @@ class SokobanCanvas : View {
     private var player: Bitmap?
     private var box: Bitmap?
     private var target: Bitmap?
+    private var onTarget: Bitmap?
 
     constructor(model: Model, context: Context) : super(context) {
         this.model = model
@@ -27,6 +29,7 @@ class SokobanCanvas : View {
         player = null
         box = null
         target = null
+        onTarget = null
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -85,6 +88,13 @@ class SokobanCanvas : View {
             objectSize,
             true
         )
+        onTarget = Bitmap.createScaledBitmap(
+            BitmapFactory.decodeResource(resources,
+            R.drawable.loot_boxsecond),
+            objectSize,
+            objectSize,
+            true
+        )
     }
 
     private fun drawMapObjects(
@@ -113,6 +123,9 @@ class SokobanCanvas : View {
                     }
                     PLAYER -> {
                         canvas.drawBitmap(player!!, coordinateX, coordinateY, paint)
+                    }
+                    ONTARGET -> {
+                        canvas.drawBitmap(onTarget!!, coordinateX, coordinateY, paint)
                     }
                 }
                 coordinateX += mapObjectSize.toFloat()
