@@ -5,7 +5,7 @@ import com.bektursun.sokobanandroid.SokobanProperties.Companion.MOVE_BOTTOM
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MOVE_LEFT
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MOVE_RIGHT
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MOVE_TOP
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.ON_TARGET_GAME_MAP
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.ON_TARGET_IN_GAME_MAP
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.PLAYER
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.SPACE_IN_GAME_MAP
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.TARGET_IN_GAME_MAP
@@ -122,7 +122,7 @@ class Model {
         nextBlock = desktop!![yIndex][xIndex - 1]
 
         // Are you moving a box? If yes assign 1 to movingBox if no assign 0
-        movingBox = if (nextBlock == BOX_IN_GAME_MAP || nextBlock == ON_TARGET_GAME_MAP) 1 else 0
+        movingBox = if (nextBlock == BOX_IN_GAME_MAP || nextBlock == ON_TARGET_IN_GAME_MAP) 1 else 0
 
         /* Don't move if you're going outside of an array or see a wall
            Adding movingBox to an index makes it consider what's in front
@@ -131,14 +131,14 @@ class Model {
         if (xIndex - movingBox == 0 || desktop!![yIndex][xIndex - 1 - movingBox] == WALL_IN_GAME_MAP) return
 
         // Don't move if there are two boxes in front
-        if (movingBox == 1 && (desktop!![yIndex][xIndex - 2] == BOX_IN_GAME_MAP || desktop!![yIndex][xIndex - 2] == ON_TARGET_GAME_MAP)) return
+        if (movingBox == 1 && (desktop!![yIndex][xIndex - 2] == BOX_IN_GAME_MAP || desktop!![yIndex][xIndex - 2] == ON_TARGET_IN_GAME_MAP)) return
 
         // Am I going to step on a Target? If yes willStepTarget will be true else false
-        playerStepTarget = nextBlock == TARGET_IN_GAME_MAP || nextBlock == ON_TARGET_GAME_MAP
+        playerStepTarget = nextBlock == TARGET_IN_GAME_MAP || nextBlock == ON_TARGET_IN_GAME_MAP
 
         // If you see a box in front, move it first
         if (movingBox == 1) {
-            if (desktop!![yIndex][xIndex - 2] == TARGET_IN_GAME_MAP) desktop!![yIndex][xIndex - 2] = ON_TARGET_GAME_MAP
+            if (desktop!![yIndex][xIndex - 2] == TARGET_IN_GAME_MAP) desktop!![yIndex][xIndex - 2] = ON_TARGET_IN_GAME_MAP
             else desktop!![yIndex][xIndex - 2] = BOX_IN_GAME_MAP
         }
 
@@ -154,20 +154,20 @@ class Model {
         nextBlock = desktop!![yIndex][xIndex + 1]
 
         // Are you moving a box? If yes assign 1 if no assign 0
-        movingBox = if (nextBlock == BOX_IN_GAME_MAP || nextBlock == ON_TARGET_GAME_MAP) 1 else 0
+        movingBox = if (nextBlock == BOX_IN_GAME_MAP || nextBlock == ON_TARGET_IN_GAME_MAP) 1 else 0
 
         // Don't move if you're going outside of an array or see a wall
         if (xIndex + movingBox == desktop?.size!! - 1 || desktop!![yIndex][xIndex + 1 + movingBox] == WALL_IN_GAME_MAP) return
 
         // Don't move if there are two boxes in front
-        if (movingBox == 1 && (desktop!![yIndex][xIndex + 2] == BOX_IN_GAME_MAP || desktop!![yIndex][xIndex + 2] == ON_TARGET_GAME_MAP)) return
+        if (movingBox == 1 && (desktop!![yIndex][xIndex + 2] == BOX_IN_GAME_MAP || desktop!![yIndex][xIndex + 2] == ON_TARGET_IN_GAME_MAP)) return
 
         // Am I going to step on a Target if yes true else false
-        playerStepTarget = nextBlock == TARGET_IN_GAME_MAP || nextBlock == ON_TARGET_GAME_MAP
+        playerStepTarget = nextBlock == TARGET_IN_GAME_MAP || nextBlock == ON_TARGET_IN_GAME_MAP
 
         // If you see a box in front move it too
         if (movingBox == 1) {
-            if (desktop!![yIndex][xIndex + 2] == TARGET_IN_GAME_MAP) desktop!![yIndex][xIndex + 2] = ON_TARGET_GAME_MAP
+            if (desktop!![yIndex][xIndex + 2] == TARGET_IN_GAME_MAP) desktop!![yIndex][xIndex + 2] = ON_TARGET_IN_GAME_MAP
             else desktop!![yIndex][xIndex + 2] = BOX_IN_GAME_MAP
         }
 
@@ -183,20 +183,20 @@ class Model {
         nextBlock = desktop!![yIndex - 1][xIndex]
 
         // Are you moving a box? If yes assign 1 if no assign 0
-        movingBox = if (nextBlock == BOX_IN_GAME_MAP || nextBlock == ON_TARGET_GAME_MAP) 1 else 0
+        movingBox = if (nextBlock == BOX_IN_GAME_MAP || nextBlock == ON_TARGET_IN_GAME_MAP) 1 else 0
 
         // Don't move if you're going outside of an array or see a wall
         if (yIndex - movingBox == 0 || desktop!![yIndex - 1 - movingBox][xIndex] == WALL_IN_GAME_MAP) return
 
         // Don't move if there are two or more boxes in front
-        if (movingBox == 1 && (desktop!![yIndex - 2][xIndex] == BOX_IN_GAME_MAP || desktop!![yIndex - 2][xIndex] == ON_TARGET_GAME_MAP)) return
+        if (movingBox == 1 && (desktop!![yIndex - 2][xIndex] == BOX_IN_GAME_MAP || desktop!![yIndex - 2][xIndex] == ON_TARGET_IN_GAME_MAP)) return
 
         // Am I going to step on a Target if yes true else false
-        playerStepTarget = nextBlock == TARGET_IN_GAME_MAP || nextBlock == ON_TARGET_GAME_MAP
+        playerStepTarget = nextBlock == TARGET_IN_GAME_MAP || nextBlock == ON_TARGET_IN_GAME_MAP
 
         // If you see a box in front move it first
         if (movingBox == 1) {
-            if (desktop!![yIndex - 2][xIndex] == TARGET_IN_GAME_MAP) desktop!![yIndex - 2][xIndex] = ON_TARGET_GAME_MAP
+            if (desktop!![yIndex - 2][xIndex] == TARGET_IN_GAME_MAP) desktop!![yIndex - 2][xIndex] = ON_TARGET_IN_GAME_MAP
             else desktop!![yIndex - 2][xIndex] = BOX_IN_GAME_MAP
         }
 
@@ -212,20 +212,20 @@ class Model {
         nextBlock = desktop!![yIndex + 1][xIndex]
 
         // Are you moving a box? If yes assign 1 if no assign 0
-        movingBox = if (nextBlock == BOX_IN_GAME_MAP || nextBlock == ON_TARGET_GAME_MAP) 1 else 0
+        movingBox = if (nextBlock == BOX_IN_GAME_MAP || nextBlock == ON_TARGET_IN_GAME_MAP) 1 else 0
 
         // Don't move if you're going outside of an array or see a wall
         if (yIndex + movingBox == desktop?.size!! - 1 || desktop!![yIndex + 1 + movingBox][xIndex] == WALL_IN_GAME_MAP) return
 
         // Don't move if there are two boxes in front
-        if (movingBox == 1 && (desktop!![yIndex + 2][xIndex] == BOX_IN_GAME_MAP || desktop!![yIndex + 2][xIndex] == ON_TARGET_GAME_MAP)) return
+        if (movingBox == 1 && (desktop!![yIndex + 2][xIndex] == BOX_IN_GAME_MAP || desktop!![yIndex + 2][xIndex] == ON_TARGET_IN_GAME_MAP)) return
 
         // Am I going to step on a Target if yes true else false
-        playerStepTarget = nextBlock == TARGET_IN_GAME_MAP || nextBlock == ON_TARGET_GAME_MAP
+        playerStepTarget = nextBlock == TARGET_IN_GAME_MAP || nextBlock == ON_TARGET_IN_GAME_MAP
 
         // If you see a box in front move it too
         if (movingBox == 1) {
-            if (desktop!![yIndex + 2][xIndex] == TARGET_IN_GAME_MAP) desktop!![yIndex + 2][xIndex] = ON_TARGET_GAME_MAP
+            if (desktop!![yIndex + 2][xIndex] == TARGET_IN_GAME_MAP) desktop!![yIndex + 2][xIndex] = ON_TARGET_IN_GAME_MAP
             else desktop!![yIndex + 2][xIndex] = BOX_IN_GAME_MAP
         }
 
@@ -240,7 +240,7 @@ class Model {
     fun getWinGame(): Boolean {
         i = 0
         while (i < targetCount) {
-            if (desktop!![targetY!![i]][targetX!![i]] != ON_TARGET_GAME_MAP
+            if (desktop!![targetY!![i]][targetX!![i]] != ON_TARGET_IN_GAME_MAP
             ) {
                 return false
             }
@@ -250,19 +250,18 @@ class Model {
     }
 
     fun chooseLevel(levelName: String) {
-        val mapChooser = MapChooser(viewer, this)
+        val mapChooser = GameMapChooser(viewer, this)
         mapChooser.chooseMap(levelName)
     }
 
     fun chooseLocalLevel(levelName: String) {
-        val mapChooser = MapChooser(viewer, this)
+        val mapChooser = GameMapChooser(viewer, this)
         desktop = mapChooser.chooseLocalMaps(levelName)
         setMapToView()
     }
 
     fun setMap(map: Array<IntArray>) {
         desktop = map
-        initGameMap()
         setMapToView()
     }
 

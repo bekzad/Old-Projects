@@ -7,7 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.BOX_IN_GAME_MAP
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.ON_TARGET_GAME_MAP
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.ON_TARGET_IN_GAME_MAP
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.PLAYER
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.TARGET_IN_GAME_MAP
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.WALL_IN_GAME_MAP
@@ -131,7 +131,7 @@ class SokobanCanvas : View {
                     PLAYER -> {
                         canvas.drawBitmap(player!!, coordinateX, coordinateY, paint)
                     }
-                    ON_TARGET_GAME_MAP -> {
+                    ON_TARGET_IN_GAME_MAP -> {
                         canvas.drawBitmap(onTarget!!, coordinateX, coordinateY, paint)
                     }
                 }

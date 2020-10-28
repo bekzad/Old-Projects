@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream
 import java.net.Socket
 import kotlin.concurrent.thread
 
-class ConnectToServer {
+class ReadLevelsFromServer {
 
     private var model: Model
 
@@ -25,7 +25,9 @@ class ConnectToServer {
 
                 val inputStream = ObjectInputStream(socket.getInputStream())
                 desktop = inputStream.readObject() as Array<IntArray>
+
                 model.setMap(desktop)
+
                 outputStream.close()
                 socket.close()
             } catch (e: Exception) {

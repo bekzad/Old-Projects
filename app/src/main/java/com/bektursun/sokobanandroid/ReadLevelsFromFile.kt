@@ -29,9 +29,7 @@ class ReadLevelsFromFile {
         getArrayMapSize(levelName, context)
 
         val mapArray = Array(mapSize) { IntArray(mapRow) }
-
         val fileLevel = context.assets.open(levelName)
-
         val scanner = Scanner(fileLevel)
 
         while (scanner.hasNextLine()) {

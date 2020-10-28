@@ -10,7 +10,7 @@ import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_SIX
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_THREE
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_TWO
 
-class MapChooser {
+class GameMapChooser {
 
     private val viewer: Viewer
     private var model: Model
@@ -36,9 +36,9 @@ class MapChooser {
         val serverAddress = SokobanProperties.readProperty("host", viewer)
         val serverPort = SokobanProperties.readProperty("port", viewer)
         when (level) {
-            MAP_LEVEL_SEVEN -> ConnectToServer(model).getLevelFromServer(MAP_LEVEL_SEVEN, serverAddress, serverPort.toInt())
-            MAP_LEVEL_EIGHT -> ConnectToServer(model).getLevelFromServer(MAP_LEVEL_EIGHT, serverAddress, serverPort.toInt())
-            else            -> ConnectToServer(model).getLevelFromServer(MAP_LEVEL_NINE, serverAddress, serverPort.toInt())
+            MAP_LEVEL_SEVEN -> ReadLevelsFromServer(model).getLevelFromServer(MAP_LEVEL_SEVEN, serverAddress, serverPort.toInt())
+            MAP_LEVEL_EIGHT -> ReadLevelsFromServer(model).getLevelFromServer(MAP_LEVEL_EIGHT, serverAddress, serverPort.toInt())
+            else            -> ReadLevelsFromServer(model).getLevelFromServer(MAP_LEVEL_NINE, serverAddress, serverPort.toInt())
         }
     }
 
