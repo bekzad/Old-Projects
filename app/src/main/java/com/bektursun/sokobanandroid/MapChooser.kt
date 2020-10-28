@@ -10,7 +10,7 @@ import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_SIX
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_THREE
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_TWO
 
-class ChooseMap {
+class MapChooser {
 
     private val viewer: Viewer
     private var model: Model

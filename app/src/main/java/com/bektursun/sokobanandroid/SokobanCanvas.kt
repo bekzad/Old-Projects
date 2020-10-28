@@ -48,7 +48,6 @@ class SokobanCanvas : View {
     private fun drawMap(canvas: Canvas) {
         if (model.isSetView()) {
             val arrayMap = model.getArrayGameMap()
-            println("arrayMap: $arrayMap")
             val mapObjectSize = calculateMapObjectSize(arrayMap!!)
             createBitmapMapObjects(mapObjectSize)
             drawMapObjects(
@@ -113,10 +112,8 @@ class SokobanCanvas : View {
         mapObjectSize: Int,
         mapYMargin: Int
     ) {
-
         var coordinateX = 0f
         var coordinateY = mapYMargin.toFloat()
-
         val paint = Paint()
 
         for (row in arrayMap) {

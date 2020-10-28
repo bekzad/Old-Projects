@@ -239,7 +239,6 @@ class Model {
 
     fun getWinGame(): Boolean {
         i = 0
-        println("TargetCount: $targetCount")
         while (i < targetCount) {
             if (desktop!![targetY!![i]][targetX!![i]] != ON_TARGET_GAME_MAP
             ) {
@@ -251,12 +250,12 @@ class Model {
     }
 
     fun chooseLevel(levelName: String) {
-        val mapChooser = ChooseMap(viewer, this)
+        val mapChooser = MapChooser(viewer, this)
         mapChooser.chooseMap(levelName)
     }
 
     fun chooseLocalLevel(levelName: String) {
-        val mapChooser = ChooseMap(viewer, this)
+        val mapChooser = MapChooser(viewer, this)
         desktop = mapChooser.chooseLocalMaps(levelName)
         setMapToView()
     }

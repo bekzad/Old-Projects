@@ -18,7 +18,6 @@ class ReadLevelsFromFile {
     }
 
     fun readLevelFromFile(levelName: String, context: Context): Array<IntArray> {
-        println("LEVELNAME: $levelName")
         return when (levelName) {
             MAP_LEVEL_FOUR -> readFile(MAP_LEVEL_FOUR, context)
             MAP_LEVEL_FIVE -> readFile(MAP_LEVEL_FIVE, context)
