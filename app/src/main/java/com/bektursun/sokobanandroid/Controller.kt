@@ -78,18 +78,22 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
 
     private fun onSwipeRight() {
         model.move(MOVE_RIGHT)
+        if (model.getWinGame()) restartGame()
     }
 
     private fun onSwipeLeft() {
         model.move(MOVE_LEFT)
+        if (model.getWinGame()) restartGame()
     }
 
     private fun onSwipeBottom() {
         model.move(MOVE_BOTTOM)
+        if (model.getWinGame()) restartGame()
     }
 
     private fun onSwipeTop() {
         model.move(MOVE_TOP)
+        if (model.getWinGame()) restartGame()
     }
 
     override fun onClick(dialogInterface: DialogInterface, p1: Int) {

@@ -15,22 +15,30 @@ class Model {
 
     private val viewer: Viewer
 
+    // Index variables of a Player and Targets
     private var xIndex: Int
     private var yIndex: Int
+
     private var desktop: Array<IntArray>?
 
+    // Number of targets
     private var targetCount: Int
 
     // Indexes of targets
     private var targetX: IntArray?
     private var targetY: IntArray?
 
+    // Variable for whether you're moving a box or just a player
     private var movingBox: Int
+
+    // Variables for whether a Player or a box will step on Target or were on Target
     private var playerOnTarget: Boolean
     private var playerStepTarget: Boolean
 
+    // Variable for the coming block
     private var nextBlock: Int
 
+    // Loop variables, so that we don't have to create a new one every time
     private var i: Int
     private var j: Int
 
@@ -66,10 +74,11 @@ class Model {
 
         var n = 0
         for (i in 0 until desktop?.size!!) {
-            for (element in desktop!![i]) {
-                if (element == TARGET) {
+            for (j in 0 until  desktop!![i].size) {
+                if (desktop!![i][j] == TARGET) {
                     targetX!![n] = j
-                    targetY!![n++] = i
+                    targetY!![n] = i
+                    n += 1
                 }
             }
         }
@@ -90,10 +99,30 @@ class Model {
 
     fun move(direction: String) {
         when (direction) {
-            MOVE_LEFT -> moveLeft()
-            MOVE_TOP -> moveTop()
-            MOVE_RIGHT -> moveRight()
-            MOVE_BOTTOM -> moveBottom()
+            MOVE_LEFT -> {
+                moveLeft()
+                if (getWinGame()) {
+                    viewer.endGame()
+                }
+            }
+            MOVE_TOP -> {
+                moveTop()
+                if (getWinGame()) {
+                    viewer.endGame()
+                }
+            }
+            MOVE_RIGHT -> {
+                moveRight()
+                if (getWinGame()) {
+                    viewer.endGame()
+                }
+            }
+            MOVE_BOTTOM -> {
+                moveBottom()
+                if (getWinGame()) {
+                    viewer.endGame()
+                }
+            }
 
             else -> return
         }
@@ -293,6 +322,21 @@ class Model {
     private fun restartGame() {
 
     }
+
+    fun getWinGame(): Boolean {
+        i = 0
+        println("TargetCount: $targetCount")
+        while (i < targetCount) {
+            println(desktop!![targetY!![i]][targetX!![i]])
+            if (desktop!![targetY!![i]][targetX!![i]] != Properties.ONTARGET
+            ) {
+                return false
+            }
+            i++
+        }
+        return true
+    }
+
 
     fun getArrayGameMap() = desktop
 
