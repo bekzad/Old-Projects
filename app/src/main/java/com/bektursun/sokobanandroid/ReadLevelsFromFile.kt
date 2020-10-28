@@ -1,41 +1,34 @@
 package com.bektursun.sokobanandroid
 
 import android.content.Context
-import com.bektursun.sokobanandroid.Properties.Companion.LEVEL_ONE
-import com.bektursun.sokobanandroid.Properties.Companion.LEVEL_THREE
-import com.bektursun.sokobanandroid.Properties.Companion.LEVEL_TWO
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_FIVE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_FOUR
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.MAP_LEVEL_SIX
 import java.util.*
 
 
 class ReadLevelsFromFile {
 
-    private var mapSize: Int = 0
-    private var mapRow: Int = 0
+    private var mapSize: Int
+    private var mapRow: Int
 
-    fun readLevelFromFile(levelName: String, context: Context): Array<IntArray> {
-        return when (levelName) {
-            LEVEL_ONE -> getLevelFile(LEVEL_ONE, context)
-            LEVEL_TWO -> getLevelFile(LEVEL_TWO, context)
-            else -> getLevelFile(LEVEL_THREE, context)
-        }
+    constructor() {
+        mapSize = 0
+        mapRow = 0
     }
 
-    private fun getLevelFile(levelName: String, context: Context): Array<IntArray> {
+    fun readLevelFromFile(levelName: String, context: Context): Array<IntArray> {
+        println("LEVELNAME: $levelName")
         return when (levelName) {
-            LEVEL_ONE -> {
-                readFile(LEVEL_ONE, context)
-            }
-            LEVEL_TWO -> {
-                readFile(LEVEL_TWO, context)
-            }
-            else -> {
-                readFile(LEVEL_THREE, context)
-            }
+            MAP_LEVEL_FOUR -> readFile(MAP_LEVEL_FOUR, context)
+            MAP_LEVEL_FIVE -> readFile(MAP_LEVEL_FIVE, context)
+            else       -> readFile(MAP_LEVEL_SIX, context)
         }
     }
 
     private fun readFile(levelName: String, context: Context): Array<IntArray> {
         getArrayMapSize(levelName, context)
+
         val mapArray =
             Array(mapSize) { IntArray(mapRow) }
 

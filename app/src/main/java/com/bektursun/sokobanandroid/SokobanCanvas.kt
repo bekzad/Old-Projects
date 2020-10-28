@@ -6,11 +6,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
-import com.bektursun.sokobanandroid.Properties.Companion.BOX
-import com.bektursun.sokobanandroid.Properties.Companion.ONTARGET
-import com.bektursun.sokobanandroid.Properties.Companion.PLAYER
-import com.bektursun.sokobanandroid.Properties.Companion.TARGET
-import com.bektursun.sokobanandroid.Properties.Companion.WALL
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.BOX_IN_GAME_MAP
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.ON_TARGET_GAME_MAP
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.PLAYER
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.TARGET_IN_GAME_MAP
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.WALL_IN_GAME_MAP
 import com.example.sokobanandroid.R
 
 
@@ -22,6 +22,7 @@ class SokobanCanvas : View {
     private var box: Bitmap?
     private var target: Bitmap?
     private var onTarget: Bitmap?
+    private var isSetView: Boolean
 
     constructor(model: Model, context: Context) : super(context) {
         this.model = model
@@ -30,11 +31,14 @@ class SokobanCanvas : View {
         box = null
         target = null
         onTarget = null
+        isSetView = false
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawMap(canvas)
+        if (isSetView) {
+            drawMap(canvas)
+        }
     }
 
     fun update() {
@@ -42,22 +46,23 @@ class SokobanCanvas : View {
     }
 
     private fun drawMap(canvas: Canvas) {
-        val screenWidth: Int = width
+        if (model.setView()) {
+            val arrayMap = model.getArrayGameMap()
+            println("arrayMap: $arrayMap")
+            val mapObjectSize = calculateMapObjectSize(arrayMap!!)
+            createBitmapMapObjects(mapObjectSize)
+            drawMapObjects(
+                arrayMap, canvas, mapObjectSize,
+                calculateDifferenceInVerticalOffsetsOfTheMap(mapObjectSize, arrayMap[0].size)
+            )
+        }
 
-        val arrayMap = model.getArrayGameMap()
-        val mapObjectSize = screenWidth / arrayMap!![0].size
-
-        createBitmapMapObjects(mapObjectSize)
-
-        drawMapObjects(
-            arrayMap, canvas, mapObjectSize,
-            calculateDifferenceInVerticalOffsetsOfTheMap(mapObjectSize, arrayMap.size)
-        )
     }
 
     private fun createBitmapMapObjects(objectSize: Int) {
         wall = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources,
+            BitmapFactory.decodeResource(
+                resources,
                 R.drawable.rsz_wall
             ),
             objectSize,
@@ -65,7 +70,8 @@ class SokobanCanvas : View {
             true
         )
         player = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources,
+            BitmapFactory.decodeResource(
+                resources,
                 R.drawable.character
             ),
             objectSize,
@@ -73,7 +79,8 @@ class SokobanCanvas : View {
             true
         )
         box = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources,
+            BitmapFactory.decodeResource(
+                resources,
                 R.drawable.lootbox
             ),
             objectSize,
@@ -81,7 +88,8 @@ class SokobanCanvas : View {
             true
         )
         target = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources,
+            BitmapFactory.decodeResource(
+                resources,
                 R.drawable.close
             ),
             objectSize,
@@ -89,8 +97,10 @@ class SokobanCanvas : View {
             true
         )
         onTarget = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources,
-            R.drawable.loot_boxsecond),
+            BitmapFactory.decodeResource(
+                resources,
+                R.drawable.loot_boxsecond
+            ),
             objectSize,
             objectSize,
             true
@@ -112,19 +122,19 @@ class SokobanCanvas : View {
         for (row in arrayMap) {
             for (column in row) {
                 when (column) {
-                    WALL -> {
+                    WALL_IN_GAME_MAP -> {
                         canvas.drawBitmap(wall!!, coordinateX, coordinateY, paint)
                     }
-                    TARGET -> {
+                    TARGET_IN_GAME_MAP -> {
                         canvas.drawBitmap(target!!, coordinateX, coordinateY, paint)
                     }
-                    BOX -> {
+                    BOX_IN_GAME_MAP -> {
                         canvas.drawBitmap(box!!, coordinateX, coordinateY, paint)
                     }
                     PLAYER -> {
                         canvas.drawBitmap(player!!, coordinateX, coordinateY, paint)
                     }
-                    ONTARGET -> {
+                    ON_TARGET_GAME_MAP -> {
                         canvas.drawBitmap(onTarget!!, coordinateX, coordinateY, paint)
                     }
                 }
@@ -142,8 +152,16 @@ class SokobanCanvas : View {
         val mapHeight = objectSize * arrayMapVerticalCount
         val screenHeight = height
         val screenDifferences = screenHeight - mapHeight
-        val mapYMargin = screenDifferences / 2
-        return mapYMargin
+        return screenDifferences / 2
+    }
+
+    private fun calculateMapObjectSize(arrayMap: Array<IntArray>): Int {
+        val screenWidth: Int = width
+        return screenWidth / arrayMap[0].size
+    }
+
+    fun setViewOrNot(isSet: Boolean) {
+        isSetView = isSet
     }
 
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="list_levels">
+        <item>Level one</item>
+        <item>Level two</item>
+        <item>Level three</item>
+        <item>Level four</item>
+        <item>Level five</item>
+        <item>Level six</item>
+        <item>Level seven</item>
+        <item>Level eight</item>
+        <item>Level nine</item>
+    </array>
+</resources>

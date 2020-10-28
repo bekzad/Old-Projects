@@ -3,6 +3,7 @@ package com.bektursun.sokobanandroid
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sokobanandroid.R
 
 
 class Viewer : AppCompatActivity {
@@ -25,6 +26,7 @@ class Viewer : AppCompatActivity {
         )
         setContentView(sokobanCanvas)
         sokobanCanvas?.setOnTouchListener(controller)
+        endGame()
     }
 
     fun update() {
@@ -34,12 +36,16 @@ class Viewer : AppCompatActivity {
     fun endGame() {
         val dialogBuilder = AlertDialog.Builder(this)
 
-        dialogBuilder.setMessage("Congrats!")
+        dialogBuilder.setTitle("Congrats!")
+            .setItems(R.array.list_levels, controller)
             .setCancelable(false)
-            .setPositiveButton("Restart", controller)
 
         val alert = dialogBuilder.create()
         alert.setTitle("You win!")
         alert.show()
+    }
+
+    fun setView() {
+        sokobanCanvas?.setViewOrNot(true)
     }
 }

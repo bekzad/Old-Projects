@@ -1,8 +1,8 @@
 package com.bektursun.sokobanandroid
 
-import com.bektursun.sokobanandroid.Properties.Companion.LEVEL_ONE
-import com.bektursun.sokobanandroid.Properties.Companion.LEVEL_THREE
-import com.bektursun.sokobanandroid.Properties.Companion.LEVEL_TWO
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_ONE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_THREE
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.LEVEL_TWO
 import java.io.File
 import java.util.*
 
