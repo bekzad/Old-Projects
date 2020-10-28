@@ -1,16 +1,17 @@
-package com.example.sokobanandroid
+package com.bektursun.sokobanandroid
 
+import android.content.DialogInterface
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_BOTTOM
-import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_LEFT
-import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_RIGHT
-import com.example.sokobanandroid.SokobanProperties.Companion.MOVE_TOP
+import com.bektursun.sokobanandroid.Properties.Companion.MOVE_BOTTOM
+import com.bektursun.sokobanandroid.Properties.Companion.MOVE_LEFT
+import com.bektursun.sokobanandroid.Properties.Companion.MOVE_RIGHT
+import com.bektursun.sokobanandroid.Properties.Companion.MOVE_TOP
 import kotlin.math.abs
 
 
-class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener {
+class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener, DialogInterface.OnClickListener {
 
     private val model: Model
     private val gestureDetector: GestureDetector
@@ -54,7 +55,7 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
         val diffX = motionEnd.x - motionStart.x
 
         if (abs(diffX) > abs(diffY)) {
-            if (abs(diffX) > SokobanProperties.SWIPE_THRESHOLD && abs(velocityX) > SokobanProperties.SWIPE_VELOCITY_THRESHOLD) {
+            if (abs(diffX) > Properties.SWIPE_THRESHOLD && abs(velocityX) > Properties.SWIPE_VELOCITY_THRESHOLD) {
                 if (diffX > 0) {
                     onSwipeRight()
                 } else {
@@ -63,7 +64,7 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
                 result = true
             }
 
-        } else if (abs(diffY) > SokobanProperties.SWIPE_THRESHOLD && abs(velocityY) > SokobanProperties.SWIPE_VELOCITY_THRESHOLD) {
+        } else if (abs(diffY) > Properties.SWIPE_THRESHOLD && abs(velocityY) > Properties.SWIPE_VELOCITY_THRESHOLD) {
             if (diffY > 0) {
                 onSwipeBottom()
             } else {
@@ -90,4 +91,14 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
     private fun onSwipeTop() {
         model.move(MOVE_TOP)
     }
+
+    override fun onClick(dialogInterface: DialogInterface, p1: Int) {
+        restartGame()
+        dialogInterface.dismiss()
+    }
+
+    private fun restartGame() {
+        println("Game is Restarted! Yeah! Bitch!")
+    }
+
 }

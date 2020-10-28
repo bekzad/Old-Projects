@@ -1,4 +1,4 @@
-package com.example.sokobanandroid
+package com.bektursun.sokobanandroid
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -6,10 +6,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
-import com.example.sokobanandroid.SokobanProperties.Companion.BOX_IN_GAME_MAP
-import com.example.sokobanandroid.SokobanProperties.Companion.PLAYER
-import com.example.sokobanandroid.SokobanProperties.Companion.TARGET_IN_GAME_MAP
-import com.example.sokobanandroid.SokobanProperties.Companion.WALL_IN_GAME_MAP
+import com.bektursun.sokobanandroid.Properties.Companion.BOX
+import com.bektursun.sokobanandroid.Properties.Companion.PLAYER
+import com.bektursun.sokobanandroid.Properties.Companion.TARGET
+import com.bektursun.sokobanandroid.Properties.Companion.WALL
+import com.example.sokobanandroid.R
 
 
 class SokobanCanvas : View {
@@ -53,25 +54,33 @@ class SokobanCanvas : View {
 
     private fun createBitmapMapObjects(objectSize: Int) {
         wall = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources, R.drawable.rsz_wall),
+            BitmapFactory.decodeResource(resources,
+                R.drawable.rsz_wall
+            ),
             objectSize,
             objectSize,
             true
         )
         player = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources, R.drawable.character),
+            BitmapFactory.decodeResource(resources,
+                R.drawable.character
+            ),
             objectSize,
             objectSize,
             true
         )
         box = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources, R.drawable.lootbox),
+            BitmapFactory.decodeResource(resources,
+                R.drawable.lootbox
+            ),
             objectSize,
             objectSize,
             true
         )
         target = Bitmap.createScaledBitmap(
-            BitmapFactory.decodeResource(resources, R.drawable.close),
+            BitmapFactory.decodeResource(resources,
+                R.drawable.close
+            ),
             objectSize,
             objectSize,
             true
@@ -93,13 +102,13 @@ class SokobanCanvas : View {
         for (row in arrayMap) {
             for (column in row) {
                 when (column) {
-                    WALL_IN_GAME_MAP -> {
+                    WALL -> {
                         canvas.drawBitmap(wall!!, coordinateX, coordinateY, paint)
                     }
-                    TARGET_IN_GAME_MAP -> {
+                    TARGET -> {
                         canvas.drawBitmap(target!!, coordinateX, coordinateY, paint)
                     }
-                    BOX_IN_GAME_MAP -> {
+                    BOX -> {
                         canvas.drawBitmap(box!!, coordinateX, coordinateY, paint)
                     }
                     PLAYER -> {
