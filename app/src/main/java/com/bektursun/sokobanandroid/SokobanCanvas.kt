@@ -2,6 +2,7 @@ package com.bektursun.sokobanandroid
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Bitmap.createScaledBitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -38,6 +39,7 @@ class SokobanCanvas : View {
         super.onDraw(canvas)
         if (isSetView) {
             drawMap(canvas)
+            drawRefreshAndLevelButtons(canvas)
         }
     }
 
@@ -59,7 +61,7 @@ class SokobanCanvas : View {
     }
 
     private fun createBitmapMapObjects(objectSize: Int) {
-        wall = Bitmap.createScaledBitmap(
+        wall = createScaledBitmap(
             BitmapFactory.decodeResource(
                 resources,
                 R.drawable.rsz_wall
@@ -68,7 +70,7 @@ class SokobanCanvas : View {
             objectSize,
             true
         )
-        player = Bitmap.createScaledBitmap(
+        player = createScaledBitmap(
             BitmapFactory.decodeResource(
                 resources,
                 R.drawable.character
@@ -77,7 +79,7 @@ class SokobanCanvas : View {
             objectSize,
             true
         )
-        box = Bitmap.createScaledBitmap(
+        box = createScaledBitmap(
             BitmapFactory.decodeResource(
                 resources,
                 R.drawable.lootbox
@@ -86,7 +88,7 @@ class SokobanCanvas : View {
             objectSize,
             true
         )
-        target = Bitmap.createScaledBitmap(
+        target = createScaledBitmap(
             BitmapFactory.decodeResource(
                 resources,
                 R.drawable.close
@@ -95,7 +97,7 @@ class SokobanCanvas : View {
             objectSize,
             true
         )
-        onTarget = Bitmap.createScaledBitmap(
+        onTarget = createScaledBitmap(
             BitmapFactory.decodeResource(
                 resources,
                 R.drawable.loot_boxsecond
@@ -104,6 +106,21 @@ class SokobanCanvas : View {
             objectSize,
             true
         )
+    }
+
+    private fun drawRefreshAndLevelButtons(canvas: Canvas) {
+        val paint = Paint()
+        val refreshBitmap: Bitmap = createScaledBitmap(
+            BitmapFactory.decodeResource(
+                resources,
+                R.drawable.refresh
+            ),
+            80,
+            80,
+            true
+        )
+        canvas.drawBitmap(refreshBitmap, 150f, 150f, paint)
+
     }
 
     private fun drawMapObjects(
@@ -154,7 +171,8 @@ class SokobanCanvas : View {
 
     private fun calculateMapObjectSize(arrayMap: Array<IntArray>): Int {
         val screenWidth: Int = width
-        return screenWidth / arrayMap[0].size
+        val dimension =  screenWidth / arrayMap[0].size
+        return dimension
     }
 
     fun setViewOrNot(isSet: Boolean) {

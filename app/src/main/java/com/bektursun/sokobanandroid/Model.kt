@@ -113,6 +113,7 @@ class Model {
 
         if (getWinGame()) {
             viewer.endGame()
+            targetCount = 0
         }
         viewer.update()
     }
@@ -234,10 +235,9 @@ class Model {
          */
         desktop!![yIndex][xIndex] = if (playerOnTarget) TARGET_IN_GAME_MAP else SPACE_IN_GAME_MAP
         desktop!![++yIndex][xIndex] = PLAYER
-
     }
 
-    fun getWinGame(): Boolean {
+    private fun getWinGame(): Boolean {
         i = 0
         while (i < targetCount) {
             if (desktop!![targetY!![i]][targetX!![i]] != ON_TARGET_IN_GAME_MAP

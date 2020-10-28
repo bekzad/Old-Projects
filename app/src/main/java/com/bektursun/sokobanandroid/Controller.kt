@@ -39,6 +39,17 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
     }
 
     override fun onTouch(view: View, event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_UP) {
+            println(event.x)
+            println(event.y)
+
+            val x = 170f
+            val y = 210f
+
+            if (abs(event.x) >= x && abs(event.y) <= y) {
+                println("REFRESH!")
+            }
+        }
         return gestureDetector.onTouchEvent(event)
     }
 
