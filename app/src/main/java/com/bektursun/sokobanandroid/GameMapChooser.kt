@@ -67,6 +67,9 @@ class GameMapChooser {
 
     private fun getSecondLevel(): Array<IntArray> {
         return arrayOf(
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             intArrayOf(0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0),
             intArrayOf(0, 2, 4, 4, 0, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 0),
             intArrayOf(0, 2, 4, 4, 0, 0, 2, 0, 3, 0, 0, 3, 0, 0, 2, 0),
@@ -76,7 +79,10 @@ class GameMapChooser {
             intArrayOf(0, 2, 2, 2, 2, 2, 2, 0, 2, 2, 3, 0, 3, 0, 2, 0),
             intArrayOf(0, 0, 0, 2, 0, 3, 0, 0, 3, 0, 3, 0, 3, 0, 2, 0),
             intArrayOf(0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0),
-            intArrayOf(0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0)
+            intArrayOf(0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         )
     }
 
