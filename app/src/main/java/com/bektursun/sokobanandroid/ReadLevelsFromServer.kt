@@ -14,11 +14,15 @@ class ReadLevelsFromServer {
         this.model = model
     }
 
-    fun getLevelFromServer(text: String, serverAddress: String, port: Int) {
+    fun getLevelFromServer(text: String, viewer: Viewer) {
         var desktop: Array<IntArray>
+
+        val serverAddress = SokobanProperties.readProperty("host", viewer)
+        val serverPort = SokobanProperties.readProperty("port", viewer).toInt()
+
         thread(start = true) {
             try {
-                val socket = Socket(serverAddress, port)
+                val socket = Socket(serverAddress, serverPort)
                 val outputStream = ObjectOutputStream(BufferedOutputStream(socket.getOutputStream()))
                 outputStream.writeUTF(text)
                 outputStream.flush()
