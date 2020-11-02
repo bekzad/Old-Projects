@@ -10,11 +10,11 @@ import java.util.*
 class ReadLevelsFromFile {
 
     private var mapSize: Int
-    private var mapRow: Int
+    private var mapColumn: Int
 
     constructor() {
         mapSize = 0
-        mapRow = 0
+        mapColumn = 0
     }
 
     fun readLevelFromFile(levelName: String, context: Context): Array<IntArray> {
@@ -28,7 +28,7 @@ class ReadLevelsFromFile {
     private fun readFile(levelName: String, context: Context): Array<IntArray> {
         getArrayMapSize(levelName, context)
 
-        val mapArray = Array(mapSize) { IntArray(mapRow) }
+        val mapArray = Array(mapSize) { IntArray(mapColumn) }
         val fileLevel = context.assets.open(levelName)
         val scanner = Scanner(fileLevel)
 
@@ -48,23 +48,22 @@ class ReadLevelsFromFile {
         val file = context.assets.open(fileName)
 
         val scanner = Scanner(file)
-        var stringBuilder = ""
+        var string = ""
 
-        var row = scanner.nextLine()
-        row = row.replace(" ", "")
-        val arrayRow = row.length
+        var column = scanner.nextLine()
+        var countRows = 1
+        column = column.replace(" ", "")
+        val arrayRow = column.length
+
 
         while (scanner.hasNextLine()) {
-            stringBuilder += (scanner.nextLine() + "\n")
+            string += (scanner.nextLine() + "\n")
+            countRows++
         }
-        stringBuilder = stringBuilder.replace(" ", "")
+        string = string.replace(" ", "")
 
-        mapSize = countLines(stringBuilder)
-        mapRow = arrayRow
+        mapSize = countRows
+        mapColumn = arrayRow
     }
 
-    private fun countLines(str: String): Int {
-        val lines = str.split("[\n\r]".toRegex()).toTypedArray()
-        return lines.size
-    }
 }

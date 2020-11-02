@@ -14,20 +14,20 @@ class SokobanProperties {
         const val MOVE_TOP:    String = "Top"
         const val MOVE_BOTTOM: String = "Bottom"
 
-        const val SPACE_IN_GAME_MAP:     Int = 0
-        const val PLAYER:                Int = 1
-        const val WALL_IN_GAME_MAP:      Int = 2
-        const val BOX_IN_GAME_MAP:       Int = 3
-        const val TARGET_IN_GAME_MAP:    Int = 4
-        const val ON_TARGET_IN_GAME_MAP: Int = 5
+        const val SPACE:     Int = 0
+        const val PLAYER:    Int = 1
+        const val WALL:      Int = 2
+        const val BOX:       Int = 3
+        const val TARGET:    Int = 4
+        const val BOX_ON_TARGET: Int = 5
 
         const val MAP_LEVEL_ONE:   String = "levelOne"
         const val MAP_LEVEL_TWO:   String = "levelTwo"
         const val MAP_LEVEL_THREE: String = "levelThree"
 
-        const val MAP_LEVEL_FOUR: String = "levelFour"
-        const val MAP_LEVEL_FIVE: String = "levelFive"
-        const val MAP_LEVEL_SIX:  String = "levelSix"
+        const val MAP_LEVEL_FOUR: String = "Levels/levelFour"
+        const val MAP_LEVEL_FIVE: String = "Levels/levelFive"
+        const val MAP_LEVEL_SIX:  String = "Levels/levelSix"
 
         const val MAP_LEVEL_SEVEN: String = "7"
         const val MAP_LEVEL_EIGHT: String = "8"
@@ -44,7 +44,5 @@ class SokobanProperties {
 
             return property
         }
-
     }
-
 }

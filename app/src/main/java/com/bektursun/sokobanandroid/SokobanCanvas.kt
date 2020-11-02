@@ -7,11 +7,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.BOX_IN_GAME_MAP
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.ON_TARGET_IN_GAME_MAP
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.BOX
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.BOX_ON_TARGET
 import com.bektursun.sokobanandroid.SokobanProperties.Companion.PLAYER
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.TARGET_IN_GAME_MAP
-import com.bektursun.sokobanandroid.SokobanProperties.Companion.WALL_IN_GAME_MAP
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.TARGET
+import com.bektursun.sokobanandroid.SokobanProperties.Companion.WALL
 import com.example.sokobanandroid.R
 
 
@@ -39,7 +39,6 @@ class SokobanCanvas : View {
         super.onDraw(canvas)
         if (isSetView) {
             drawMap(canvas)
-            drawRefreshAndLevelButtons(canvas)
         }
     }
 
@@ -108,20 +107,6 @@ class SokobanCanvas : View {
         )
     }
 
-    private fun drawRefreshAndLevelButtons(canvas: Canvas) {
-        val paint = Paint()
-        val refreshBitmap: Bitmap = createScaledBitmap(
-            BitmapFactory.decodeResource(
-                resources,
-                R.drawable.refresh
-            ),
-            80,
-            80,
-            true
-        )
-        canvas.drawBitmap(refreshBitmap, 150f, 150f, paint)
-
-    }
 
     private fun drawMapObjects(
         arrayMap: Array<IntArray>,
@@ -136,19 +121,19 @@ class SokobanCanvas : View {
         for (row in arrayMap) {
             for (column in row) {
                 when (column) {
-                    WALL_IN_GAME_MAP -> {
+                    WALL -> {
                         canvas.drawBitmap(wall!!, coordinateX, coordinateY, paint)
                     }
-                    TARGET_IN_GAME_MAP -> {
+                    TARGET -> {
                         canvas.drawBitmap(target!!, coordinateX, coordinateY, paint)
                     }
-                    BOX_IN_GAME_MAP -> {
+                    BOX -> {
                         canvas.drawBitmap(box!!, coordinateX, coordinateY, paint)
                     }
                     PLAYER -> {
                         canvas.drawBitmap(player!!, coordinateX, coordinateY, paint)
                     }
-                    ON_TARGET_IN_GAME_MAP -> {
+                    BOX_ON_TARGET -> {
                         canvas.drawBitmap(onTarget!!, coordinateX, coordinateY, paint)
                     }
                 }
@@ -178,5 +163,4 @@ class SokobanCanvas : View {
     fun setViewOrNot(isSet: Boolean) {
         isSetView = isSet
     }
-
 }

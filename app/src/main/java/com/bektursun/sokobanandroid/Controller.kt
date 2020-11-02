@@ -33,36 +33,20 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
         this.gestureDetector = GestureDetector(viewer, this)
     }
 
-
     fun getModel(): Model {
         return model
     }
 
     override fun onTouch(view: View, event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_UP) {
-            println(event.x)
-            println(event.y)
-
-            val x = 170f
-            val y = 210f
-
-            if (abs(event.x) >= x && abs(event.y) <= y) {
-                println("REFRESH!")
-            }
+            return gestureDetector.onTouchEvent(event)
         }
-        return gestureDetector.onTouchEvent(event)
-    }
 
     override fun onDown(e: MotionEvent?): Boolean {
         return true
     }
 
-    override fun onFling(
-        motionStart: MotionEvent,
-        motionEnd: MotionEvent,
-        velocityX: Float,
-        velocityY: Float
-    ): Boolean {
+    override fun onFling (
+        motionStart: MotionEvent, motionEnd: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
         return userSwipe(motionStart, motionEnd, velocityX, velocityY)
     }
 
@@ -124,5 +108,4 @@ class Controller : View.OnTouchListener, GestureDetector.SimpleOnGestureListener
         }
         dialogInterface.dismiss()
     }
-
 }
