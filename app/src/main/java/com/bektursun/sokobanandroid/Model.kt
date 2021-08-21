@@ -152,88 +152,43 @@ class Model {
     }
 
     private fun moveRight() {
-        // The block that the Player is going to step on
         nextBlock = desktop!![yIndex][xIndex + 1]
-
-        // Are you moving a box? If yes assign 1 if no assign 0
         movingBox = if (nextBlock == BOX || nextBlock == BOX_ON_TARGET) 1 else 0
-
-        // Don't move if you're going outside of an array or see a wall
         if (xIndex + movingBox == desktop?.size!! - 1 || desktop!![yIndex][xIndex + 1 + movingBox] == WALL) return
-
-        // Don't move if there are two boxes in front
         if (movingBox == 1 && (desktop!![yIndex][xIndex + 2] == BOX || desktop!![yIndex][xIndex + 2] == BOX_ON_TARGET)) return
-
-        // Am I going to step on a Target if yes true else false
         playerStepTarget = nextBlock == TARGET || nextBlock == BOX_ON_TARGET
-
-        // If you see a box in front move it too
         if (movingBox == 1) {
             if (desktop!![yIndex][xIndex + 2] == TARGET) desktop!![yIndex][xIndex + 2] = BOX_ON_TARGET
             else desktop!![yIndex][xIndex + 2] = BOX
         }
-
-        /* Move Right
-            If Player was on Target position then when Player moves the place is still Target
-         */
         desktop!![yIndex][xIndex] = if (playerOnTarget) TARGET else SPACE
         desktop!![yIndex][++xIndex] = PLAYER
     }
 
     private fun moveTop() {
-        // The block that the Player is going to step on
         nextBlock = desktop!![yIndex - 1][xIndex]
-
-        // Are you moving a box? If yes assign 1 if no assign 0
         movingBox = if (nextBlock == BOX || nextBlock == BOX_ON_TARGET) 1 else 0
-
-        // Don't move if you're going outside of an array or see a wall
         if (yIndex - movingBox == 0 || desktop!![yIndex - 1 - movingBox][xIndex] == WALL) return
-
-        // Don't move if there are two or more boxes in front
         if (movingBox == 1 && (desktop!![yIndex - 2][xIndex] == BOX || desktop!![yIndex - 2][xIndex] == BOX_ON_TARGET)) return
-
-        // Am I going to step on a Target if yes true else false
         playerStepTarget = nextBlock == TARGET || nextBlock == BOX_ON_TARGET
-
-        // If you see a box in front move it first
         if (movingBox == 1) {
             if (desktop!![yIndex - 2][xIndex] == TARGET) desktop!![yIndex - 2][xIndex] = BOX_ON_TARGET
             else desktop!![yIndex - 2][xIndex] = BOX
         }
-
-        /* Move Up
-            If Player was on Target position then when Player moves the place is still Target
-         */
         desktop!![yIndex][xIndex] = if (playerOnTarget) TARGET else SPACE
         desktop!![--yIndex][xIndex] = PLAYER
     }
 
     private fun moveBottom() {
-        // The block that the Player is going to step on
         nextBlock = desktop!![yIndex + 1][xIndex]
-
-        // Are you moving a box? If yes assign 1 if no assign 0
         movingBox = if (nextBlock == BOX || nextBlock == BOX_ON_TARGET) 1 else 0
-
-        // Don't move if you're going outside of an array or see a wall
         if (yIndex + movingBox == desktop?.size!! - 1 || desktop!![yIndex + 1 + movingBox][xIndex] == WALL) return
-
-        // Don't move if there are two boxes in front
         if (movingBox == 1 && (desktop!![yIndex + 2][xIndex] == BOX || desktop!![yIndex + 2][xIndex] == BOX_ON_TARGET)) return
-
-        // Am I going to step on a Target if yes true else false
         playerStepTarget = nextBlock == TARGET || nextBlock == BOX_ON_TARGET
-
-        // If you see a box in front move it too
         if (movingBox == 1) {
             if (desktop!![yIndex + 2][xIndex] == TARGET) desktop!![yIndex + 2][xIndex] = BOX_ON_TARGET
             else desktop!![yIndex + 2][xIndex] = BOX
         }
-
-        /* Move Down
-            If Player was on Target position then when Player moves the place is still Target
-         */
         desktop!![yIndex][xIndex] = if (playerOnTarget) TARGET else SPACE
         desktop!![++yIndex][xIndex] = PLAYER
     }

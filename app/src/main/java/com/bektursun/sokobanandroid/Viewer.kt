@@ -36,7 +36,7 @@ class Viewer : AppCompatActivity {
     fun endGame() {
         val dialogBuilder = AlertDialog.Builder(this)
 
-        dialogBuilder.setTitle("Congrats!")
+        dialogBuilder.setTitle("Choose level!")
             .setItems(R.array.list_levels, controller)
             .setCancelable(false)
 

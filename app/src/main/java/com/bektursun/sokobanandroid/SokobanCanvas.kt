@@ -25,7 +25,7 @@ class SokobanCanvas : View {
     private var onTarget: Bitmap?
     private var isSetView: Boolean
 
-    constructor(model: Model, context: Context) : super(context) {
+    public constructor(model: Model, context: Context) : super(context) {
         this.model = model
         wall = null
         player = null
@@ -42,7 +42,7 @@ class SokobanCanvas : View {
         }
     }
 
-    fun update() {
+    public fun update() {
         invalidate()
     }
 
